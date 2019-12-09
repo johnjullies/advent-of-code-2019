@@ -9,20 +9,19 @@ import (
   "strconv"
 )
 
-func runOpcodes(intArr []int) []int {
-  for i := 0; i < len(intArr); i += 4 {
-    switch intArr[i] {
-      case 1:
-        val1, val2, val3 := intArr[i+1], intArr[i+2], intArr[i+3]
-        intArr[val3] = intArr[val1] + intArr[val2]
-      case 2:
-        val1, val2, val3 := intArr[i+1], intArr[i+2], intArr[i+3]
-        intArr[val3] = intArr[val1] * intArr[val2]
-      default:
-        return intArr
+func runOpcodes(ic []int) []int {
+  for i := 0; true; i += 4 {
+    opcode := ic[i]
+    i1, i2, i3 := ic[i+1], ic[i+2], ic[i+3]
+    if opcode == 1 {
+      ic[i3] = ic[i1] + ic[i2]
+    } else if opcode == 2 {
+      ic[i3] = ic[i1] * ic[i2]
+    } else {
+      break
     }
   }
-  return intArr
+  return ic
 }
 
 func main() {
@@ -41,7 +40,8 @@ func main() {
     for i, v := range inputArr {
       intArr[i], _ = strconv.Atoi(v)
     }
-
+    intArr[1] = 12
+    intArr[2] = 2
 		fmt.Println(runOpcodes(intArr))
 	}
 }
